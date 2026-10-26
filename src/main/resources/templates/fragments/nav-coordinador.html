@@ -1,0 +1,39 @@
+<nav th:fragment="nav" class="sidebar">
+    <div class="sidebar-brand">
+        <h2>ZOE ACADEMY</h2>
+        <p>Coordinador</p>
+    </div>
+    
+    <ul class="sidebar-menu">
+        <li><a th:href="@{/coordinador/dashboard}">Dashboard</a></li>
+        <li><a th:href="@{/coordinador/estudiantes}"> Estudiantes</a></li>
+        <li><a th:href="@{/coordinador/docentes}"> Docentes</a></li>
+        <li><a th:href="@{/coordinador/ciclos}"> Ciclos</a></li>
+        <li><a th:href="@{/coordinador/periodos}"> Periodos</a></li>
+        <li><a th:href="@{/coordinador/aulas}"> Aulas</a></li>
+        <li><a th:href="@{/coordinador/cursos}"> Cursos</a></li>
+        <li><a th:href="@{/coordinador/matriculas}"> Matrículas</a></li>
+        <li><a th:href="@{/coordinador/pagos}"> Pagos</a></li>
+    </ul>
+
+    <div class="sidebar-logout">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit"> Cerrar Sesión</button>
+        </form>
+    </div>
+	<script>
+	document.addEventListener("DOMContentLoaded", function () {
+
+	    const currentPath = window.location.pathname;
+
+	    document.querySelectorAll(".sidebar-menu a").forEach(link => {
+
+	        if(currentPath.startsWith(new URL(link.href).pathname)){
+	            link.classList.add("active");
+	        }
+
+	    });
+
+	});
+	</script>
+</nav>

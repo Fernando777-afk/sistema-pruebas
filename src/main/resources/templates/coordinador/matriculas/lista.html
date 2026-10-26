@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Matrículas - Zoe Academy</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        /* Botón de eliminar/anular adaptado al estilo visual de la tabla */
+        .btn-delete {
+            background-color: #d9534f;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            margin-left: 5px;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+        .btn-delete:hover {
+            background-color: #c9302c;
+        }
+        /* Separación limpia para que los tres botones no se amontonen */
+        .actions-cell a {
+            margin-bottom: 2px;
+        }
+    </style>
+</head>
+<body>
+<div class="layout">
+    <div th:replace="~{fragments/nav-coordinador :: nav}"></div>
+    <main class="content">
+        <div class="page-header">
+            <h1>Matrículas</h1>
+            <a th:href="@{/coordinador/matriculas/nueva}" class="btn-primary">+ Nueva Matrícula</a>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Estudiante</th>
+                    <th>Ciclo</th>
+                    <th>Periodo</th>
+                    <th>Fecha Matrícula</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="m, i : ${matriculas}">
+                    <td th:text="${i.count}"></td>
+                    <td th:text="${m.estudiante != null} ? ${m.estudiante.nombre + ' ' + m.estudiante.apellido} : 'Sin Estudiante'"></td>
+                    <td th:text="${m.ciclo != null} ? ${m.ciclo.nombre.getNombre()} : 'Sin Ciclo'"></td>
+                    <td th:text="${m.periodo != null} ? ${m.periodo.nombre} : 'Sin Periodo'"></td>
+                    <td th:text="${m.fechaMatricula}"></td>
+                    <td th:text="${m.estado}"></td>
+                    <td class="actions-cell">
+                        <a th:href="@{/coordinador/pagos/nuevo/{id}(id=${m.id})}" class="btn-primary" style="font-size:0.8rem; padding:6px 12px;">+ Pago</a>
+                        
+                        <a th:href="@{/coordinador/matriculas/editar/{id}(id=${m.id})}" class="btn-edit" style="font-size:0.8rem; padding:6px 12px;">Editar</a>
+
+                        <a th:href="@{/coordinador/matriculas/eliminar/{id}(id=${m.id})}" 
+                           class="btn-delete"
+                           onclick="return confirm('¿Estás seguro de que deseas anular esta matrícula? Se revocarán los registros de asistencia y evaluaciones correspondientes a este ciclo académico.');">
+                           Anular
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</div>
+</body>
+</html>

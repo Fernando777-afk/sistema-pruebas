@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cursos - Zoe Academy</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        /* Estilo rápido para el botón de eliminar alineado con tu diseño */
+        .btn-delete {
+            background-color: #d9534f;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9em;
+            margin-left: 5px;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+        .btn-delete:hover {
+            background-color: #c9302c;
+        }
+    </style>
+</head>
+<body>
+<div class="layout">
+    <div th:replace="~{fragments/nav-coordinador :: nav}"></div>
+    <main class="content">
+        <div class="page-header">
+            <h1>Cursos</h1>
+            <a th:href="@{/coordinador/cursos/nuevo}" class="btn-primary">+ Nuevo Curso</a>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Ciclo</th>
+                    <th>Docente</th>
+                    <th>Aula</th>
+                    <th>Periodo</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="c, i : ${cursos}">
+                    <td th:text="${i.count}"></td>
+                    <td th:text="${c.nombre}"></td>
+                    <td th:text="${c.ciclo != null} ? ${c.ciclo.nombre.getNombre()} : '-'"></td>
+                    <td th:text="${c.docente != null} ? ${c.docente.nombre + ' ' + c.docente.apellido} : '-'"></td>
+                    <td th:text="${c.aula != null} ? ${c.aula.codigo} : '-'"></td>
+                    <td th:text="${c.periodo != null} ? ${c.periodo.nombre} : '-'"></td>
+                    <td>
+                        <a th:href="@{/coordinador/cursos/editar/{id}(id=${c.id})}" class="btn-edit">Editar</a>
+                        
+                        <a th:href="@{/coordinador/cursos/eliminar/{id}(id=${c.id})}" 
+                           class="btn-delete"
+                           onclick="return confirm('¿Estás seguro de que deseas eliminar este curso? Esta acción revocará las asignaciones vigentes.');">
+                           Eliminar
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</div>
+</body>
+</html>

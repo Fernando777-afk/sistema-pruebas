@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Zoe Academy - Formulario de Matrícula</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="layout">
+    <div th:replace="~{fragments/nav-coordinador :: nav}"></div>
+
+    <main class="content">
+        <div class="form-container">
+            <h1 class="form-title" th:text="${matricula != null and matricula.id != null} ? 'Editar Matrícula' : 'Nueva Matrícula'">Nueva Matrícula</h1>
+
+            <form th:action="${matricula != null and matricula.id != null} ? @{/coordinador/matriculas/editar/{id}(id=${matricula.id})} : @{/coordinador/matriculas/nueva}" 
+                  method="post">
+
+                <input type="hidden" name="id" th:if="${matricula != null}" th:value="${matricula.id}" />
+
+                <div class="form-group">
+                    <label>Estudiante <span>*</span></label>
+                    <select name="estudianteId" class="form-control" required>
+                        <option value="">-- Seleccionar --</option>
+                        <option th:each="e : ${estudiantes}"
+                                th:value="${e.id}"
+                                th:text="${e.nombre + ' ' + e.apellido + ' - ' + e.dni}"
+                                th:selected="${matricula != null and matricula.estudiante != null and matricula.estudiante.id == e.id}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Ciclo <span>*</span></label>
+                    <select name="cicloId" class="form-control" required>
+                        <option value="">-- Seleccionar --</option>
+                        <option th:each="c : ${ciclos}"
+                                th:value="${c.id}"
+                                th:text="${c.nombre.getNombre()}"
+                                th:selected="${matricula != null and matricula.ciclo != null and matricula.ciclo.id == c.id}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Periodo <span>*</span></label>
+                    <select name="periodoId" class="form-control" required>
+                        <option value="">-- Seleccionar --</option>
+                        <option th:each="p : ${periodos}"
+                                th:value="${p.id}"
+                                th:text="${p.nombre}"
+                                th:selected="${matricula != null and matricula.periodo != null and matricula.periodo.id == p.id}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-save" th:text="${matricula != null and matricula.id != null} ? 'Actualizar' : 'Matricular'">Matricular</button>
+                    <a th:href="@{/coordinador/matriculas}" class="btn-cancel">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>

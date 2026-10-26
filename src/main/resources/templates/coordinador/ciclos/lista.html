@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ciclos - Zoe Academy</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        /* Estilo rápido para el botón de eliminar */
+        .btn-delete {
+            background-color: #d9534f;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9em;
+            margin-left: 5px;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+        .btn-delete:hover {
+            background-color: #c9302c;
+        }
+    </style>
+</head>
+<body>
+<div class="layout">
+    <div th:replace="~{fragments/nav-coordinador :: nav}"></div>
+    <main class="content">
+        <div class="page-header">
+            <h1>Ciclos</h1>
+            <a th:href="@{/coordinador/ciclos/nuevo}" class="btn-primary">+ Nuevo Ciclo</a>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="c, i : ${ciclos}">
+                    <td th:text="${i.count}"></td>
+                    <td th:text="${c.nombre.getNombre()}"></td>
+                    <td>
+                        <a th:href="@{/coordinador/ciclos/editar/{id}(id=${c.id})}" class="btn-edit">Editar</a>
+                        
+                        <a th:href="@{/coordinador/ciclos/eliminar/{id}(id=${c.id})}" 
+                           class="btn-delete"
+                           onclick="return confirm('¿Estás seguro de que deseas eliminar este ciclo? Esto podría afectar a los cursos y matrículas vinculados.');">
+                           Eliminar
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</div>
+</body>
+</html>

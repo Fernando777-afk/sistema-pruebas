@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle de Pagos - Zoe Academy</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        /* =========================================
+           ESTILOS DE DETALLE DE PAGOS
+           ========================================= */
+        
+        /* Botón de retroceso moderno */
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #4b5563;
+            background-color: #ffffff;
+            border: 1px solid #d1d5db;
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .btn-back:hover {
+            background-color: #f9fafb;
+            color: #111827;
+            border-color: #9ca3af;
+        }
+
+        /* Tarjeta de Resumen de la Matrícula */
+        .info-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f3f4f6;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .info-icon {
+            padding: 10px;
+            background: #fef2f2;
+            color: #991b1b;
+            border-radius: 10px;
+            display: flex;
+        }
+        .info-text {
+            display: flex;
+            flex-direction: column;
+        }
+        .info-label {
+            font-size: 0.85rem;
+            color: #6b7280;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .info-value {
+            font-size: 1.1rem;
+            color: #111827;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+
+        /* Badges (Etiquetas de estado) */
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: inline-block;
+        }
+        .badge.activo { background: #d1fae5; color: #065f46; }
+        .badge.inactivo { background: #fee2e2; color: #991b1b; }
+        .badge.neutral { background: #f3f4f6; color: #374151; }
+
+        /* Estilo de Tabla Moderna */
+        .table-container {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f3f4f6;
+            overflow: hidden; /* Para que los bordes redondeados apliquen a la tabla */
+        }
+        .modern-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .modern-table th {
+            background-color: #f9fafb;
+            padding: 16px;
+            text-align: left;
+            font-size: 0.85rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .modern-table td {
+            padding: 16px;
+            color: #374151;
+            font-size: 0.95rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .modern-table tr:last-child td {
+            border-bottom: none;
+        }
+        .modern-table tr:hover {
+            background-color: #fdfdfd;
+        }
+        .monto-highlight {
+            font-weight: 700;
+            color: #111827;
+        }
+
+        /* Alerta de vacío */
+        .empty-alert {
+            background: #f9fafb;
+            border: 1px dashed #d1d5db;
+            color: #6b7280;
+            padding: 32px;
+            text-align: center;
+            border-radius: 12px;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+<div class="layout">
+    <div th:replace="~{fragments/nav-estudiante :: nav}"></div>
+    
+    <main class="content">
+        <div class="page-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <h1 style="margin: 0;">Detalle de Pagos</h1>
+            <a th:href="@{/estudiante/mis-pagos}" class="btn-back">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                Volver a Mis Pagos
+            </a>
+        </div>
+
+        <div class="info-card">
+            <div class="info-item">
+                <div class="info-icon">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                </div>
+                <div class="info-text">
+                    <span class="info-label">Ciclo Académico</span>
+                    <span class="info-value" th:text="${matricula.ciclo.nombre.getNombre()}"></span>
+                </div>
+            </div>
+            
+            <div class="info-item">
+                <div class="info-icon">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                </div>
+                <div class="info-text">
+                    <span class="info-label">Periodo</span>
+                    <span class="info-value" th:text="${matricula.periodo.nombre}"></span>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-icon">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <div class="info-text">
+                    <span class="info-label">Estado de Matrícula</span>
+                    <div style="margin-top: 4px;">
+                        <span class="badge" 
+                              th:classappend="${matricula.estado.name() == 'ACTIVO' or matricula.estado == 'ACTIVO'} ? 'activo' : 'inactivo'" 
+                              th:text="${matricula.estado}">
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div th:if="${pagos.isEmpty()}" class="empty-alert">
+            <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="margin-bottom: 12px; opacity: 0.5;"><path stroke-linecap="round" stroke-linejoin="round" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2zM10 8.5a.5.5 0 11-1 0 .5.5 0 011 0zm5 5a.5.5 0 11-1 0 .5.5 0 011 0z"/></svg>
+            <p style="margin: 0;">No hay pagos registrados para esta matrícula en el sistema.</p>
+        </div>
+
+        <div th:if="${!pagos.isEmpty()}" class="table-container">
+            <table class="modern-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Monto</th>
+                        <th>Fecha</th>
+                        <th>Método de Pago</th>
+                        <th>Estado</th>
+                        <th>Observación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="p, i : ${pagos}">
+                        <td th:text="${i.count}" style="color: #9ca3af; font-weight: 500;"></td>
+                        <td th:text="'S/ ' + ${p.monto}" class="monto-highlight"></td>
+                        <td>
+                            <span style="display: flex; align-items: center; gap: 6px;">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color:#9ca3af;"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                <span th:text="${p.fechaPago}"></span>
+                            </span>
+                        </td>
+                        <td th:text="${p.metodoPago}"></td>
+                        <td>
+                            <span class="badge neutral" th:text="${p.estado}"></span>
+                        </td>
+                        <td th:text="${p.observacion ?: '-'}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+</body>
+</html>

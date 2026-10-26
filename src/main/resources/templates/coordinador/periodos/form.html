@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Periodo - Zoe Academy</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="layout">
+    <div th:replace="~{fragments/nav-coordinador :: nav}"></div>
+    <main class="content">
+        <div class="form-container">
+            <h1 class="form-title" th:text="${periodo.id == null} ? 'Nuevo Periodo' : 'Editar Periodo'"></h1>
+            
+            <form th:action="${periodo.id == null} ? @{/coordinador/periodos/nuevo} : @{/coordinador/periodos/editar/{id}(id=${periodo.id})}"
+                  th:object="${periodo}" method="post">
+                
+                <input type="hidden" th:field="*{id}" />
+
+                <div class="form-group">
+                    <label>Nombre <span>*</span></label>
+                    <input type="text" th:field="*{nombre}" class="form-control" required/>
+                </div>
+
+                <div class="form-group">
+                    <label>Fecha Inicio <span>*</span></label>
+                    <input type="date" th:field="*{fechaInicio}" class="form-control" required/>
+                </div>
+
+                <div class="form-group">
+                    <label>Fecha Fin <span>*</span></label>
+                    <input type="date" th:field="*{fechaFin}" class="form-control" required/>
+                </div>
+
+                <div class="form-group">
+                    <label>Estado</label>
+                    <select th:field="*{estado}" class="form-control">
+                        <option th:each="e : ${estados}" th:value="${e}" th:text="${e}"></option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-save">Guardar Cambios</button>
+                    <a th:href="@{/coordinador/periodos}" class="btn-cancel">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>

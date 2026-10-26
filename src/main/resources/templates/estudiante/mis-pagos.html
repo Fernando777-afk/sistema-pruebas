@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Pagos - Zoe Academy</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        /* =========================================
+           ESTILOS DE MIS PAGOS (ESTUDIANTE)
+           ========================================= */
+
+        .page-header {
+            margin-bottom: 28px;
+        }
+        .page-header h1 {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #111827;
+            font-size: 1.75rem;
+        }
+
+        /* Contenedor de Tarjetas */
+        .payments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        /* Tarjeta de Ciclo / Pago */
+        .payment-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+        }
+        .payment-card:hover {
+            transform: translateY(-2px);
+            border-color: #991b1b;
+            box-shadow: 0 10px 15px -3px rgba(153, 27, 27, 0.08);
+        }
+
+        /* Detalles internos de la tarjeta */
+        .card-main {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .card-icon-wrapper {
+            padding: 14px;
+            background-color: #fef2f2;
+            color: #991b1b;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-details {
+            display: flex;
+            flex-direction: column;
+        }
+        .periodo-tag {
+            font-size: 0.8rem;
+            color: #6b7280;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+        .ciclo-title {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #111827;
+            font-weight: 700;
+        }
+
+        /* Botón de acción moderno */
+        .btn-payment-action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: #991b1b;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: background-color 0.15s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .btn-payment-action:hover {
+            background-color: #7f1d1d;
+        }
+        .btn-payment-action svg {
+            transition: transform 0.15s ease;
+        }
+        .btn-payment-action:hover svg {
+            transform: translateX(4px);
+        }
+
+        /* Alerta de Vacío */
+        .alert-info {
+            background: #f9fafb;
+            border: 1px dashed #d1d5db;
+            color: #6b7280;
+            padding: 24px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+<div class="layout">
+    <div th:replace="~{fragments/nav-estudiante :: nav}"></div>
+    
+    <main class="content">
+        <!-- ENCABEZADO -->
+        <div class="page-header">
+            <h1>
+                <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color: #991b1b;"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                Mis Pagos
+            </h1>
+        </div>
+
+        <!-- ALERTA SIN MATRÍCULAS -->
+        <div th:if="${matriculas.isEmpty()}" class="alert-info">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span>No tienes matrículas registradas ni historiales de pago disponibles en este momento.</span>
+        </div>
+
+        <!-- CUADRÍCULA DE HISTORIALES -->
+        <div class="payments-grid" th:if="${!matriculas.isEmpty()}">
+            <div th:each="m : ${matriculas}" class="payment-card">
+                
+                <!-- Cuerpo de la tarjeta -->
+                <div class="card-main">
+                    <div class="card-icon-wrapper">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    </div>
+                    <div class="card-details">
+                        <span class="periodo-tag" th:text="${m.periodo.nombre}">Periodo 2026-I</span>
+                        <h3 class="ciclo-title" th:text="'Ciclo: ' + ${m.ciclo.nombre.getNombre()}">Ciclo I</h3>
+                    </div>
+                </div>
+
+                <!-- Botón de acción -->
+                <div class="card-footer">
+                    <a th:href="@{/estudiante/mis-pagos/{id}(id=${m.id})}" class="btn-payment-action">
+                        <span>Ver detalle de pagos</span>
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

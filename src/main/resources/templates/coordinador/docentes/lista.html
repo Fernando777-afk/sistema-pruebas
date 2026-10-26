@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Docentes - Zoe Academy</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        /* Estilo rápido para el botón de eliminar adaptado al diseño */
+        .btn-delete {
+            background-color: #d9534f;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9em;
+            margin-left: 5px;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+        .btn-delete:hover {
+            background-color: #c9302c;
+        }
+    </style>
+</head>
+<body>
+<div class="layout">
+    <div th:replace="~{fragments/nav-coordinador :: nav}"></div>
+    <main class="content">
+        <div class="page-header">
+            <h1>Docentes</h1>
+            <a th:href="@{/coordinador/docentes/nuevo}" class="btn-primary">+ Nuevo Docente</a>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>DNI</th>
+                    <th>Especialidad</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="d, i : ${docentes}">
+                    <td th:text="${i.count}"></td>
+                    <td th:text="${d.nombre}"></td>
+                    <td th:text="${d.apellido}"></td>
+                    <td th:text="${d.dni}"></td>
+                    <td th:text="${d.especialidad}"></td>
+                    <td th:text="${d.estado}"></td>
+                    <td>
+                        <a th:href="@{/coordinador/docentes/editar/{id}(id=${d.id})}" class="btn-edit">Editar</a>
+                        
+                        <a th:href="@{/coordinador/docentes/eliminar/{id}(id=${d.id})}" 
+                           class="btn-delete"
+                           onclick="return confirm('¿Estás seguro de que deseas eliminar este docente? Se perderán sus asignaciones en los cursos vigentes.');">
+                           Eliminar
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</div>
+</body>
+</html>

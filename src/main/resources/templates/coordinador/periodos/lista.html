@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Periodos - Zoe Academy</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        /* Estilo rápido para el botón de eliminar adaptado al diseño */
+        .btn-delete {
+            background-color: #d9534f;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9em;
+            margin-left: 5px;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+        .btn-delete:hover {
+            background-color: #c9302c;
+        }
+    </style>
+</head>
+<body>
+<div class="layout">
+    <div th:replace="~{fragments/nav-coordinador :: nav}"></div>
+    <main class="content">
+        <div class="page-header">
+            <h1>Periodos</h1>
+            <a th:href="@{/coordinador/periodos/nuevo}" class="btn-primary">+ Nuevo Periodo</a>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Fin</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="p, i : ${periodos}">
+                    <td th:text="${i.count}"></td>
+                    <td th:text="${p.nombre}"></td>
+                    <td th:text="${p.fechaInicio}"></td>
+                    <td th:text="${p.fechaFin}"></td>
+                    <td th:text="${p.estado}"></td>
+                    <td>
+                        <a th:href="@{/coordinador/periodos/editar/{id}(id=${p.id})}" class="btn-edit">Editar</a>
+                        
+                        <a th:href="@{/coordinador/periodos/eliminar/{id}(id=${p.id})}" 
+                           class="btn-delete"
+                           onclick="return confirm('¿Estás seguro de que deseas eliminar este periodo académico? Esta acción puede afectar a todos los cursos y matrículas vinculados a estas fechas.');">
+                           Eliminar
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</div>
+</body>
+</html>

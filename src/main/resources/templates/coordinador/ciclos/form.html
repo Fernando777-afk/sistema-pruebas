@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ciclo - Zoe Academy</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="layout">
+    <div th:replace="~{fragments/nav-coordinador :: nav}"></div>
+    <main class="content">
+        <div class="form-container">
+            <h1 class="form-title" th:text="${ciclo.id == null} ? 'Nuevo Ciclo' : 'Editar Ciclo'"></h1>
+            
+            <form th:action="${ciclo.id == null} ? @{/coordinador/ciclos/nuevo} : @{/coordinador/ciclos/editar/{id}(id=${ciclo.id})}"
+                  th:object="${ciclo}" method="post">
+                
+                <input type="hidden" th:field="*{id}" />
+
+                <div class="form-group">
+                    <label>Tipo de Ciclo <span>*</span></label>
+                    <select th:field="*{nombre}" class="form-control" required>
+                        <option value="">-- Seleccionar --</option>
+                        <option th:each="t : ${T(com.example.demo.model.Ciclo.TipoCiclo).values()}" 
+                                th:value="${t}" 
+                                th:text="${t.nombre}"></option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-save">Guardar Cambios</button>
+                    <a th:href="@{/coordinador/ciclos}" class="btn-cancel">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>
+

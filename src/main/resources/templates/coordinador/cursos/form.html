@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Curso - Zoe Academy</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="layout">
+    <div th:replace="~{fragments/nav-coordinador :: nav}"></div>
+    <main class="content">
+        <div class="form-container">
+            <h1 class="form-title" th:text="${curso.id == null} ? 'Nuevo Curso' : 'Editar Curso'"></h1>
+            
+            <form th:action="${curso.id == null} ? @{/coordinador/cursos/nuevo} : @{/coordinador/cursos/editar/{id}(id=${curso.id})}"
+                  th:object="${curso}" method="post">
+                
+                <input type="hidden" th:field="*{id}" />
+
+                <div class="form-group">
+                    <label>Nombre <span>*</span></label>
+                    <input type="text" th:field="*{nombre}" class="form-control" required/>
+                </div>
+
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <input type="text" th:field="*{descripcion}" class="form-control" placeholder="Ej. Curso básico de ciencias..."/>
+                </div>
+
+                <div class="form-group">
+                    <label>Ciclo <span>*</span></label>
+                    <select th:field="*{ciclo}" class="form-control" required>
+                        <option value="">-- Seleccionar --</option>
+                        <option th:each="c : ${ciclos}" th:value="${c.id}" th:text="${c.nombre.getNombre()}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Docente Asignado</label>
+                    <select th:field="*{docente}" class="form-control">
+                        <option value="">-- Seleccionar Docente --</option>
+                        <option th:each="d : ${docentes}" th:value="${d.id}" th:text="${d.nombre + ' ' + d.apellido}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Aula / Salón</label>
+                    <select th:field="*{aula}" class="form-control">
+                        <option value="">-- Seleccionar Aula --</option>
+                        <option th:each="a : ${aulas}" th:value="${a.id}" th:text="${a.codigo}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Periodo Académico</label>
+                    <select th:field="*{periodo}" class="form-control">
+                        <option value="">-- Seleccionar Periodo --</option>
+                        <option th:each="p : ${periodos}" th:value="${p.id}" th:text="${p.nombre}"></option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-save">Guardar Cambios</button>
+                    <a th:href="@{/coordinador/cursos}" class="btn-cancel">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>

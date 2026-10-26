@@ -1,0 +1,267 @@
+/* ═══════════════════════════════════════
+   ZOE ACADEMY — Login
+   Diseño Profesional
+═══════════════════════════════════════ */
+
+:root {
+    --red: #C0392B;
+    --red-dark: #922B21;
+    --red-soft: #FADBD8;
+    --white: #FFFFFF;
+    --gray-300: #DEE2E6;
+    --gray-500: #9E9E9E;
+    --gray-700: #555555;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    min-height:100vh;
+
+    display:flex;
+    justify-content:flex-start;   /* Cambio: flex-start envía a la izquierda */
+    align-items:center;
+
+    padding-right:70%;            /* Cambio: padding-right en lugar de padding-left */
+    
+    background-image:
+        linear-gradient(rgba(0,0,0,.25),rgba(0,0,0,.25)),
+        url("/images/fondo.png");
+
+	background-size: cover;
+	background-position: 35% center;  /* Opcional: mueve el fondo a la izquierda */
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+}
+
+
+/* CONTENEDOR */
+
+.login-container{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+/* TARJETA */
+
+.login-box{
+
+    width:470px;
+
+    padding:45px;
+	border:1px solid rgba(255,255,255,.35);
+    border-radius:25px;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(18px);
+	-webkit-backdrop-filter:blur(18px);
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.30);
+}
+
+/* LOGO */
+
+.login-logo{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.logo-img{
+    width:260px;
+    height:auto;
+    display:block;
+    transition:.3s;
+}
+
+.logo-img:hover{
+    transform:scale(1.04);
+}
+
+.logo-img{
+    width:260px;
+    height:auto;
+    display:block;
+    margin:auto;
+    margin-bottom:15px;
+}
+
+.logo-img:hover{
+    transform:scale(1.03);
+}
+
+/* FORMULARIO */
+
+.form-group{
+    margin-bottom:22px;
+}
+
+.form-group label{
+    color:#fff;
+    font-weight:600;
+    text-shadow:0 2px 6px rgba(0,0,0,.5);
+}
+
+.form-group input{
+
+    width:100%;
+    padding:15px;
+
+    background:rgba(255,255,255,.75);
+
+    border:1px solid rgba(255,255,255,.45);
+
+    border-radius:10px;
+
+    font-size:16px;
+
+    transition:.25s;
+}
+
+.form-group input:focus{
+    outline: none;
+    border: 1px solid #d1d5db;
+    box-shadow: 0 0 0 3px rgba(255,255,255,.15);
+}
+
+.input-group{
+
+    display:flex;
+
+    align-items:center;
+
+    background:white;
+
+    border:1px solid #d9d9d9;
+
+    border-radius:12px;
+
+    padding:0 14px;
+
+    transition:.3s;
+
+}
+
+.input-group i{
+
+    color:#666;
+
+    font-size:20px;
+
+    margin-right:12px;
+
+}
+
+.input-group:focus-within{
+
+    border-color:#B71C1C;
+
+    box-shadow:0 0 0 3px rgba(183,28,28,.15);
+
+}
+
+.input-group input{
+
+    flex:1;
+
+    border:none;
+
+    outline:none;
+
+    padding:15px 0;
+
+    background:transparent;
+
+    font-size:16px;
+
+}
+
+/* BOTÓN */
+
+button[type="submit"]{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:linear-gradient(135deg,#D63031,#B71C1C);
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+button[type="submit"]:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 10px 20px rgba(183,28,28,.45);
+
+}
+
+/* ALERTAS */
+
+.alert{
+    padding:12px 15px;
+    border-radius:10px;
+    margin-bottom:20px;
+    font-size:14px;
+}
+
+.alert-error{
+    background:var(--red-soft);
+    color:var(--red-dark);
+    border:1px solid var(--red);
+}
+
+.alert-success{
+    background:#D5F5E3;
+    color:#1E8449;
+    border:1px solid #27AE60;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:520px){
+
+    .login-box{
+        width:95%;
+        padding:30px;
+    }
+
+    .logo-img{
+        width:220px;
+    }
+	
+input,
+input:focus,
+input:active,
+input:hover {
+	   border: 1px solid #d1d5db !important;
+	   outline: none !important;
+	    box-shadow: none !important;
+	    -webkit-box-shadow: none !important;
+	}
+
+}

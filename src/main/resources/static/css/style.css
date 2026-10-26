@@ -1,0 +1,483 @@
+/* ==========================================================================
+   ZOE ACADEMY - HOJA DE ESTILOS COMPLETA (MODERNO & MINIMALISTA)
+   ========================================================================== */
+
+:root {
+    /* Colores Institucionales */
+    --primary: #991b1b;          /* Guinda Académico */
+    --primary-hover: #7f1d1d;    /* Guinda Oscuro */
+    --primary-light: #fef2f2;    /* Fondo guinda sutil */
+    
+    /* Paleta de Neutros */
+    --bg-system: #f9fafb;        /* Fondo general de la app */
+    --bg-card: #ffffff;          /* Fondo de tarjetas */
+    --text-main: #111827;        /* Texto principal */
+    --text-muted: #6b7280;       /* Texto secundario */
+    --border-color: #e5e7eb;     /* Bordes sutiles */
+    --border-light: #f3f4f6;     /* Divisiones internas */
+
+    /* Estados */
+    --success-bg: #d1fae5;
+    --success-text: #065f46;
+    --danger-bg: #fee2e2;
+    --danger-text: #991b1b;
+    --info-bg: #eff6ff;
+    --info-text: #1e3a8a;
+
+    /* Configuración Visual */
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    --transition: all 0.2s ease;
+    --font-stack: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* RESET GENERAL */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-stack);
+    background-color: var(--bg-system);
+    color: var(--text-main);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ESTRUCTURA DE LA APP */
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.content{
+
+    flex:1;
+
+    min-height:100vh;
+
+    padding:40px;
+
+    position:relative;
+
+    overflow:auto;
+
+}
+
+.content::before{
+
+    content:"";
+
+    position:fixed;
+
+    top:0;
+
+    left:280px; /* Ajusta al ancho de tu menú */
+
+    width:calc(100% - 280px);
+
+    height:100%;
+
+    background-image:url("/images/fondo-dashboard.png");
+
+    background-size:cover;
+
+    background-position:center;
+
+    background-repeat:no-repeat;
+
+    opacity:.50;
+
+    z-index:-2;
+
+}
+
+
+
+/* DISEÑO EXCLUSIVO DEL MENÚ LATERAL (SIDEBAR) */
+.sidebar {
+    width: 260px;
+    background-color: #ffffff;
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    padding: 32px 24px;
+    min-height: 100vh;
+    position: sticky;
+    top: 0;
+}
+
+.sidebar-brand {
+    margin-bottom: 32px;
+}
+
+.sidebar-brand h2 {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #8B1E1E;
+    margin: 0;
+}
+
+.sidebar-brand p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Menú sin puntos de lista y estilizado */
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.sidebar-menu li a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 14px 18px;
+    margin: 6px 0;
+
+    color: #374151;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+
+    /* Forma ovalada */
+    border-radius: 18px;
+
+    /* Similar a las tarjetas */
+    background: rgba(220,220,220,0.80);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(255,255,255,0.45);
+
+    transition: all .30s ease;
+}
+
+/* Página activa */
+
+.sidebar-menu li a.active {
+    background: #8B1E1E;
+    color: white;
+    box-shadow: 0 8px 18px rgba(183,28,28,.30);
+}
+
+.sidebar-menu li a:hover {
+    background: #A52A2A;
+    color: white;
+    transform: translateX(6px);
+    box-shadow: 0 8px 18px rgba(192,57,43,.25);
+}
+
+/* Zona inferior del botón Cerrar Sesión */
+.sidebar-logout {
+    margin-top: auto;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-light);
+}
+
+.sidebar-logout button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: transparent;
+    color: var(--text-main);
+    border: 1px solid #d1d5db;
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.sidebar-logout button:hover {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border-color: #fca5a5;
+}
+
+/* COMPONENTES DE CONTENIDO (PANELES / TABLAS / BOTONES) */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+h1 { font-size: 1.75rem; font-weight: 800; color: var(--text-main); }
+h2 { font-size: 1.3rem; font-weight: 700; color: var(--text-main); }
+
+.card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+}
+
+table, .modern-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--bg-card);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+table th, .modern-table th {
+    background-color: #f9fafb;
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    padding: 14px 20px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+table td, .modern-table td {
+    padding: 14px 20px;
+    color: #374151;
+    border-bottom: 1px solid var(--border-light);
+}
+
+/* Botones Principales (Nuevo...) */
+.btn-primary {
+    background-color: var(--primary);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.95em;
+    font-weight: 600;
+    display: inline-block;
+    transition: background 0.2s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(153, 27, 27, 0.2);
+}
+
+/* Botones Secundarios (Cancelar) */
+.btn-secondary {
+    background-color: #fff;
+    color: #374151;
+    border: 1px solid #d1d5db;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.95em;
+    font-weight: 600;
+    display: inline-block;
+    transition: background 0.2s;
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+    background-color: #f9fafb;
+    border-color: #9ca3af;
+}
+
+/* Botones de Acciones en Tablas */
+.btn-edit {
+    background-color: #3b82f6;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: 600;
+    display: inline-block;
+    transition: background 0.2s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-edit:hover {
+    background-color: #2563eb;
+    transform: translateY(-1px);
+}
+
+.btn-delete {
+    background-color: #ef4444;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: 600;
+    display: inline-block;
+    transition: background 0.2s;
+    border: none;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.btn-delete:hover {
+    background-color: #dc2626;
+    transform: translateY(-1px);
+}
+
+.badge { padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; display: inline-block; }
+.badge.activo { background-color: var(--success-bg); color: var(--success-text); }
+.badge.inactivo { background-color: var(--danger-bg); color: var(--danger-text); }
+
+
+/* ==========================================================================
+   11. ESTILOS MODERNOS PARA FORMULARIOS DE EDICIÓN
+   ========================================================================== */
+.form-container {
+    max-width: 650px;
+    background: #ffffff;
+    padding: 32px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+    margin-top: 20px;
+}
+
+.form-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 24px;
+    border-bottom: 2px solid var(--border-light);
+    padding-bottom: 12px;
+}
+
+/* Filas del formulario */
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #374151;
+}
+
+.form-group label span {
+    color: var(--primary); /* Asteriscos en guinda */
+}
+
+/* Inputs, Selects y Textareas */
+.form-control {
+    width: 100%;
+    padding: 12px 16px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: var(--text-main);
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+    outline: none;
+}
+
+.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(153, 27, 27, 0.15);
+}
+
+/* Contenedor de botones de acción */
+.form-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 32px;
+    border-top: 1px solid var(--border-light);
+    padding-top: 20px;
+}
+
+/* Botones adaptados */
+.btn-save {
+    background-color: var(--primary);
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-save:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn-cancel {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 12px 16px;
+    transition: var(--transition);
+}
+
+.btn-cancel:hover {
+    color: var(--text-main);
+}
+
+/* Botones de Acciones en Tablas */
+.btn-edit {
+    background-color: #3b82f6;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: 600;
+    display: inline-block;
+    transition: background 0.2s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-edit:hover {
+    background-color: #2563eb;
+}
+
+.btn-delete {
+    background-color: #d9534f;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: 600;
+    display: inline-block;
+    transition: background 0.2s;
+    border: none;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.btn-delete:hover {
+    background-color: #c9302c;
+}
