@@ -20,3 +20,4 @@ ENV SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.H2Dialect
 ENTRYPOINT ["java", "-jar", "app.jar"]
 
 
+
