@@ -10,14 +10,11 @@ WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
 
-# Desactivar PostgreSQL y usar base de datos en memoria temporal para las pruebas
-ENV SPRING_DATASOURCE_URL=jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
-ENV SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.h2.Driver
-ENV SPRING_DATASOURCE_USERNAME=sa
-ENV SPRING_DATASOURCE_PASSWORD=
-ENV SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.H2Dialect
+# Desactivar por completo la inicialización de cualquier Base de Datos (JPA/DataSource)
+ENV SPRING_AUTOCONFIGURE_EXCLUDE=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration,org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
 
 
 
