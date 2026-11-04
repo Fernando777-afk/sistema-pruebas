@@ -245,7 +245,7 @@
                                 <td>
                                     <span class="curso-nombre" th:text="${curso.nombre}"></span>
                                 </td>
-                                <td th:text="${curso.descripcion != null ? curso.descripcion : 'Sin descripción'}" style="color: #6b7280; font-size: 0.9rem;"></td>
+                                <td th:utext="${curso.descripcion != null ? curso.descripcion : 'Sin descripción'}" style="color: #6b7280; font-size: 0.9rem;"></td>
                                 <td>
                                     <div style="display: flex; align-items: center; gap: 6px;">
                                         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="color: #9ca3af;"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
