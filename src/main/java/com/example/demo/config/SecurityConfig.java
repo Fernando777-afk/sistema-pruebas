@@ -30,14 +30,24 @@ public class SecurityConfig {
 	            .defaultSuccessUrl("/dashboard", true)
 	            .permitAll()
 	        )
-	        .logout(logout -> logout
-	            .logoutSuccessUrl("/login?logout")
-	            .permitAll()
-	        );
+			.sessionManagement(session -> session
+    .sessionFixation(fixation -> fixation.migrateSession())
+    .maximumSessions(1)
+)
+
+	       .logout(logout -> logout
+    .logoutUrl("/logout")
+    .invalidateHttpSession(true)
+    .clearAuthentication(true)
+    .deleteCookies("JSESSIONID")
+    .logoutSuccessUrl("/login?logout")
+    .permitAll()
+);
+
 
 	    return http.build();
 	}
-	 // 👇 ESTE MÉTODO FALTA
+
 	    @Bean
 	    public PasswordEncoder passwordEncoder() {
 	        return new BCryptPasswordEncoder();
