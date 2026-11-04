@@ -8,6 +8,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+
+import java.security.SecureRandom;
+import java.util.HexFormat;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import com.example.demo.security.BrowserBindingFilter;
+
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
