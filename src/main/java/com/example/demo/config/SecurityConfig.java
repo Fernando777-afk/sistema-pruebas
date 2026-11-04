@@ -21,6 +21,13 @@ import com.example.demo.security.BrowserBindingFilter;
 @EnableMethodSecurity
 public class SecurityConfig {
 
+
+	@Bean
+public BrowserBindingFilter browserBindingFilter() {
+    return new BrowserBindingFilter();
+}
+
+	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 	    http
