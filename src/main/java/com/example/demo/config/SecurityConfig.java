@@ -78,6 +78,13 @@ public BrowserBindingFilter browserBindingFilter() {
     .maximumSessions(1)
 )
 
+
+			.addFilterAfter(
+    browserBindingFilter(),
+    UsernamePasswordAuthenticationFilter.class
+)
+			
+
 	       .logout(logout -> logout
     .logoutUrl("/logout")
     .invalidateHttpSession(true)
