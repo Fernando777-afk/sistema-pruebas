@@ -41,11 +41,38 @@ public BrowserBindingFilter browserBindingFilter() {
 	            .requestMatchers("/estudiante/**").hasRole("ESTUDIANTE")
 	            .anyRequest().authenticated()
 	        )
-	        .formLogin(form -> form
-	            .loginPage("/login")
-	            .defaultSuccessUrl("/dashboard", true)
-	            .permitAll()
-	        )
+
+
+
+			.formLogin(form -> form
+    .loginPage("/login")
+    .defaultSuccessUrl("/dashboard", true)
+    .successHandler((request, response, authentication) -> {
+
+        byte[] randomBytes = new byte[32];
+        new SecureRandom().nextBytes(randomBytes);
+
+        String deviceToken = HexFormat.of().formatHex(randomBytes);
+
+        request.getSession(true).setAttribute(
+                "ZOE_DEVICE_TOKEN", deviceToken);
+
+        ResponseCookie cookie = ResponseCookie
+                .from("ZOE_DEVICE", deviceToken)
+                .httpOnly(true)
+                .secure(request.isSecure())
+                .sameSite("Strict")
+                .path("/")
+                .build();
+
+        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+
+        response.sendRedirect(request.getContextPath() + "/dashboard");
+    })
+    .permitAll()
+)
+
+			
 			.sessionManagement(session -> session
     .sessionFixation(fixation -> fixation.migrateSession())
     .maximumSessions(1)
