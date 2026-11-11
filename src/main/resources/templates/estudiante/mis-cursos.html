@@ -245,23 +245,6 @@
                                 <td>
                                     <span class="curso-nombre" th:text="${curso.nombre}"></span>
                                 </td>
-
-                                <!--/*
-CORRECCIÓN DE VULNERABILIDAD: Cross-Site Scripting (XSS) - OWASP Top 10 2017, A7
-PROBLEMA: Antes se usaba th:utext, que interpreta el contenido como HTML sin
-escapar los caracteres especiales (<, >, ", ', &). Si el campo "descripcion"
-del curso contiene código malicioso, por ejemplo <script>...</script> o
-<img src=x onerror=...>, el navegador del estudiante lo ejecuta. Esto permite
-robo de sesión (cookies), redirecciones a sitios falsos, suplantación de
-identidad o modificación del contenido de la página (CWE-79).
-SOLUCIÓN: Se cambia a th:text, que escapa los caracteres HTML. Así el contenido
-se muestra como texto plano y el navegador nunca lo interpreta como código.
-th:utext: interpreta el contenido como HTML sin escaparlo (inseguro con datos
-que el usuario puede controlar).
-th:text: muestra el contenido como texto, escapando los caracteres HTML (seguro).
-Principio aplicado: validación/codificación de salida (output encoding) sobre
-datos no confiables, según la guía de prevención de XSS de OWASP.
-/-->
                                 <td th:utext="${curso.descripcion != null ? curso.descripcion : 'Sin descripción'}" style="color: #6b7280; font-size: 0.9rem;"></td>
                                 <td>
                                     <div style="display: flex; align-items: center; gap: 6px;">
