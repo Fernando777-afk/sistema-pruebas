@@ -45,7 +45,7 @@ public class SecurityConfig {
      */
 
     // CAMBIAR SOLO ESTA LINEA PARA LA DEMOSTRACION
-    private static final boolean REMEDIACION_A2 = true;
+    private static final boolean REMEDIACION_A2 = false;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http)
