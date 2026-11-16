@@ -245,6 +245,30 @@
                                 <td>
                                     <span class="curso-nombre" th:text="${curso.nombre}"></span>
                                 </td>
+                                <!--VULNERABILIDAD A7: CROSS-SITE SCRIPTING (XSS)
+                                
+                                1. VULNERABILIDAD (ANTES):
+                                    Se utiliza th:utext para mostrar la descripcion
+                                    de los cursos. Este atributo interpreta el HTML
+                                    sin escaparlo, permitiendo que un atacante
+                                    inyecte codigo JavaScript malicioso si logra
+                                    guardarlo en la base de datos.
+
+                                    El navegador puede ejecutar el codigo cuando
+                                    el estudiante visualiza el curso, provocando
+                                    una alerta y demostrando la vulnerabilidad XSS.
+
+                                2. REMEDIACION (DESPUES):
+                                    Se reemplaza th:utext por th:text, que escapa
+                                    los caracteres especiales del HTML.
+
+                                    De esta manera, el codigo malicioso se muestra
+                                    como texto y no se ejecuta en el navegador,
+                                    protegiendo esta parte del sistema contra XSS.
+
+                                    ANTES:   th:utext = Vulnerable
+                                    DESPUES: th:text  = Remediado
+                                -->
                                 <td th:utext="${curso.descripcion != null ? curso.descripcion : 'Sin descripción'}" style="color: #6b7280; font-size: 0.9rem;"></td> 
                                 <td>
                                     <div style="display: flex; align-items: center; gap: 6px;">
